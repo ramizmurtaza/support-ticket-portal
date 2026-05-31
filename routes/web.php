@@ -4,14 +4,11 @@ use App\Http\Controllers\Admin\CommentAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SystemAdminController;
 use App\Http\Controllers\Admin\TicketAdminController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/admin');
 });
-
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -28,3 +25,5 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::patch('/systems/{id}', [SystemAdminController::class, 'update'])->name('systems.update');
     Route::post('/systems/{id}/regenerate-key', [SystemAdminController::class, 'regenerateKey'])->name('systems.regenerate');
 });
+
+require __DIR__ . '/auth.php';
